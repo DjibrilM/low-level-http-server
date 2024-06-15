@@ -9,7 +9,7 @@ const server = net.createServer((socket) => {
   socket.on("data", (data) => {
     console.log(data.toString(), "data string");
     const extractTheRequestPath = data.toString().split(" ")[1];
-    console.log(extractTheRequestPath);
+
     const response =
       extractTheRequestPath === "/"
         ? "HTTP/1.1 200 OK\n\r\n\r"
