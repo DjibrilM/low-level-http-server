@@ -22,7 +22,7 @@ const server = net.createServer((socket) => {
         .split("\r\n")[0];
       socket.write(
         Buffer.from(
-          `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 12\r\n\r\n${userAgent}`
+          `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`
         )
       );
     } else {
