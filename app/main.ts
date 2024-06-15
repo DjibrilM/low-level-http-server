@@ -8,11 +8,13 @@ const server = net.createServer((socket) => {
   //   socket.write(Buffer.from("HTTP/1.1 200 OK\r\n\r\n"));
   socket.on("data", (data) => {
     const requestPath = data.toString().split(" ")[1];
+    const query = requestPath.split("/")[2];
+
     if (requestPath === "/") {
       const response = "HTTP/1.1 200 OK\r\n r\n";
 
       socket.write(Buffer.from(response));
-    } else if (requestPath === "/echo/grape") {
+    } else if (requestPath === `/echo/grape/${query}`) {
       const response =
         "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\nabc";
       socket.write(response);
