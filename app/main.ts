@@ -7,8 +7,7 @@ const server = net.createServer((socket) => {
   //handle incoming requests and the rest
   //   socket.write(Buffer.from("HTTP/1.1 200 OK\r\n\r\n"));
   socket.on("data", (data) => {
-      const requestPath = data.toString().split(" ")[1];
-;
+    const requestPath = data.toString().split(" ")[1];
     if (requestPath === "/") {
       const response = "HTTP/1.1 200 OK\r\n r\n";
 
@@ -16,7 +15,7 @@ const server = net.createServer((socket) => {
     } else if (requestPath === "/echo/grape") {
       const response =
         "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\nabc";
-      socket.write(Buffer.from(response));
+      socket.write(response);
     }
   });
 
