@@ -9,15 +9,19 @@ const server = net.createServer((socket) => {
   socket.on("data", (data) => {
     const requestPath = data.toString().split(" ")[1];
 
-    const response =
-      requestPath === "/"
-        ? "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 7\r\n\r\ndjibril"
-        : "HTTP/1.1 404 Not Found\r\n\r\n";
-    socket.write(Buffer.from(response));
+    if (requestPath === "/") {
+      const response = "HTTP/1.1 200 OK\r\n r\n";
+
+      socket.write(Buffer.from(response));
+    } else if (requestPath === "/echo/grape") {
+      const response =
+        "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 7\r\n\r\ndjibril";
+      socket.write(Buffer.from(response));
+    }
   });
 
   socket.on("close", () => {
-    console.log("socket closed");
+    console.log("socket closed.");
     socket.end();
   });
 });
