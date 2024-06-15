@@ -7,15 +7,17 @@ const server = net.createServer((socket) => {
   //handle incoming requests and the rest
   //   socket.write(Buffer.from("HTTP/1.1 200 OK\r\n\r\n"));
   socket.on("data", (data) => {
-    const requestPath = data.toString().split(" ")[1];
+      const requestPath = data.toString().split(" ")[1];
+      console.log(requestPath);
 
     if (requestPath === "/") {
       const response = "HTTP/1.1 200 OK\r\n r\n";
 
       socket.write(Buffer.from(response));
     } else if (requestPath === "/echo/grape") {
+      console.log("running here");
       const response =
-        "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 7\r\n\r\ndjibril";
+        "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 7\r\n\r\nabc";
       socket.write(Buffer.from(response));
     }
   });
