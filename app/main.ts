@@ -4,9 +4,9 @@ import * as net from "net";
 console.log("Logs from your program will appear here!");
 
 const server = net.createServer((socket) => {
-  socket.on("close", () => {
+  //handle incoming requests and the rest
+    socket.write(Buffer.from("HTTP/1.1 200 OK\r\n\r\n"));
     socket.end();
-  });
 });
 //
 
