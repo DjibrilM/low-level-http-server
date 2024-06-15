@@ -8,18 +8,19 @@ const server = net.createServer((socket) => {
   //   socket.write(Buffer.from("HTTP/1.1 200 OK\r\n\r\n"));
   socket.on("data", (data) => {
     const requestPath = data.toString().split(" ")[1];
-      const query = requestPath.split("/")[2];
-      
-      console.log(query);
+    const query = requestPath.split("/")[2];
+
+    console.log(query);
 
     if (requestPath === "/") {
       const response = "HTTP/1.1 200 OK\r\n r\n";
 
       socket.write(Buffer.from(response));
     } else if (requestPath === `/echo/${query}`) {
-      const response =
-        `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${query.length}\r\n\r\n${query}`;
+      const response = `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${query.length}\r\n\r\n${query}`;
       socket.write(Buffer.from(response));
+    } else {
+      socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
     }
   });
 
@@ -31,5 +32,3 @@ const server = net.createServer((socket) => {
 //
 
 server.listen(4221, "localhost");
-
-
