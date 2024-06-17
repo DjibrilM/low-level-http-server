@@ -29,7 +29,9 @@ const server = net.createServer((socket) => {
     } else if (requestPath.startsWith("/files/")) {
       const [_, __, fileName] = requestPath.split("/");
       const args = process.argv.slice(2);
+ 
       const [___, absPath] = args;
+      console.log(absPath);
       const filePath = absPath + "/" + fileName;
       try {
         const content = fs.readFileSync(filePath);
