@@ -26,7 +26,7 @@ const server = net.createServer((socket) => {
           `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`
         )
       );
-    } else if (requestPath === "/files/foo") {
+    } else if (requestPath.includes("/files/")) {
       const filePath = path.join(__dirname, requestPath);
       const checkIfTheFileDoesExists = fs.existsSync(filePath);
 
