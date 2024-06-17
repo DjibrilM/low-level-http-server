@@ -1,7 +1,8 @@
 import * as net from "net";
+import fs from "fs";
+import path from "path";
 
 // You can use print statements as follows for debugging, they'll be visible when running tests.
-console.log("Logs from your program will appear here!");
 
 const server = net.createServer((socket) => {
   //handle incoming requests and the rest
@@ -25,6 +26,20 @@ const server = net.createServer((socket) => {
           `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`
         )
       );
+    } else if (requestPath === "/files/foo") {
+      const filePath = path.join(__dirname, requestPath + ".txt");
+      const checkIfTheFileDoesExists = fs.existsSync(filePath);
+
+      if (checkIfTheFileDoesExists) {
+        const file = fs.readFileSync(filePath, "utf8");
+        socket.write(
+          Buffer.from(
+            `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${file.length}\r\n\r\nHello, World!`
+          )
+        );
+      } else {
+        socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
+      }
     } else {
       socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
     }
