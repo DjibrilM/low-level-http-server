@@ -27,7 +27,7 @@ const server = net.createServer((socket) => {
         )
       );
     } else if (requestPath.startsWith("/files/")) {
-      const filePath = process.argv[1] + "/" + requestPath.split("/")[2];
+      const filePath = path.join(__dirname, requestPath.split("/")[2]);
       const checkIfTheFileDoesExist = fs.existsSync(filePath);
 
       if (checkIfTheFileDoesExist) {
