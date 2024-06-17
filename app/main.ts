@@ -28,9 +28,9 @@ const server = net.createServer((socket) => {
       );
     } else if (requestPath.includes("/files/")) {
       const filePath = path.join(__dirname, requestPath);
-      const checkIfTheFileDoesExists = fs.existsSync(filePath);
+      const checkIfTheFileDoesExist = fs.existsSync(filePath);
 
-      if (checkIfTheFileDoesExists) {
+      if (checkIfTheFileDoesExist) {
         const file = fs.readFileSync(filePath, "utf8");
         socket.write(
           Buffer.from(
