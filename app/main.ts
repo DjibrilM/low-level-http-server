@@ -27,19 +27,17 @@ const server = net.createServer((socket) => {
         )
       );
     } else if (requestPath.startsWith("/files/")) {
-      const filePath = path.join(__dirname, requestPath.split("/")[2]);
-      const checkIfTheFileDoesExist = fs.existsSync(filePath);
-
-      if (checkIfTheFileDoesExist) {
-        const file = fs.readFileSync(filePath, "utf8");
+      const [_, __, fileName] = requestPath.split("/");
+      const args = process.argv.slice(2);
+      const [___, absPath] = args;
+      const filePath = absPath + "/" + fileName;
+      try {
+        const content = fs.readFileSync(filePath);
         socket.write(
-          Buffer.from(
-            `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${file.length}\r\n\r\n${file.length}`
-          )
+          `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${content.length}\r\n\r\n${content}`
         );
-      } else {
+      } catch (error) {
         socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
-        socket.end();
       }
     } else {
       socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
