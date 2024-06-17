@@ -27,14 +27,15 @@ const server = net.createServer((socket) => {
         )
       );
     } else if (requestPath.startsWith("/files/")) {
-      const filePath = path.join(__dirname, requestPath);
+      const filePath = path.join(__dirname, "tmp/" + requestPath.split("/")[2]);
       const checkIfTheFileDoesExist = fs.existsSync(filePath);
 
       if (checkIfTheFileDoesExist) {
         const file = fs.readFileSync(filePath, "utf8");
+
         socket.write(
           Buffer.from(
-            `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${file.length}\r\n\r\n${file.length}`
+            `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${file.length}\r\n\r\n${file}`
           )
         );
       } else {
